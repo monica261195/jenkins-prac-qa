@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone'){
+            steps {
+                 url: 'https://github.com/monica261195/central-repo-java'
+
+            }
+        }
+        stage('Build'){
+            steps {
+                sh '''
+                mvn clean package
+                '''
+            }
+        }
+        stage('Archive'){
+            steps {
+                archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+            }
+        }
+    }
+}
